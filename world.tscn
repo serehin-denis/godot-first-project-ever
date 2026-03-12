@@ -2,45 +2,117 @@
 
 [ext_resource type="PackedScene" uid="uid://chdsw3tlqxcwt" path="res://components/block.tscn" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://hshbg4rrqljx" path="res://components/player.tscn" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://vkak3cycxs3q" path="res://scripts/teleport.gd" id="3_tlwt5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
+size = Vector2(1184, 20)
 
 [node name="world" type="Node2D" unique_id=1004789338]
 
-[node name="CharacterBody2D" parent="." unique_id=1899761522 instance=ExtResource("2_fj7yv")]
+[node name="Player" parent="." unique_id=1899761522 node_paths=PackedStringArray("show_vel") instance=ExtResource("2_fj7yv")]
 position = Vector2(552, 416)
 scale = Vector2(4, 4)
+show_vel = NodePath("../Label")
 
 [node name="platform" type="Node2D" parent="." unique_id=1307931068]
-position = Vector2(288, 512)
+position = Vector2(256, 512)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D" parent="platform" unique_id=61935357 instance=ExtResource("1_f3sb7")]
-position = Vector2(16.5, -3.5)
+position = Vector2(16, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D2" parent="platform" unique_id=347556884 instance=ExtResource("1_f3sb7")]
-position = Vector2(48.5, -3.5)
+position = Vector2(48, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D3" parent="platform" unique_id=426434503 instance=ExtResource("1_f3sb7")]
-position = Vector2(80.5, -3.5)
+position = Vector2(80, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D4" parent="platform" unique_id=888746064 instance=ExtResource("1_f3sb7")]
-position = Vector2(112.5, -3.5)
+position = Vector2(112, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D5" parent="platform" unique_id=448759101 instance=ExtResource("1_f3sb7")]
-position = Vector2(208.5, -3.5)
+position = Vector2(208, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D6" parent="platform" unique_id=1783540578 instance=ExtResource("1_f3sb7")]
-position = Vector2(144.5, -3.5)
+position = Vector2(144, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D7" parent="platform" unique_id=2005983092 instance=ExtResource("1_f3sb7")]
-position = Vector2(176.5, -3.5)
+position = Vector2(176, 16)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D8" parent="platform" unique_id=685700738 instance=ExtResource("1_f3sb7")]
-position = Vector2(240.5, -3.5)
+position = Vector2(240, 16)
 scale = Vector2(2, 2)
+
+[node name="StaticBody2D9" parent="platform" unique_id=1842420145 instance=ExtResource("1_f3sb7")]
+position = Vector2(304, -16)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D18" parent="platform" unique_id=1847581763 instance=ExtResource("1_f3sb7")]
+position = Vector2(304, -112)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D19" parent="platform" unique_id=1187611497 instance=ExtResource("1_f3sb7")]
+position = Vector2(336, -112)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D10" parent="platform" unique_id=1767997764 instance=ExtResource("1_f3sb7")]
+position = Vector2(336, -16)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D11" parent="platform" unique_id=2123611663 instance=ExtResource("1_f3sb7")]
+position = Vector2(432, -48)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D12" parent="platform" unique_id=73100344 instance=ExtResource("1_f3sb7")]
+position = Vector2(432, -80)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D13" parent="platform" unique_id=1384804288 instance=ExtResource("1_f3sb7")]
+position = Vector2(432, -112)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D14" parent="platform" unique_id=549614551 instance=ExtResource("1_f3sb7")]
+position = Vector2(432, -144)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D15" parent="platform" unique_id=618340212 instance=ExtResource("1_f3sb7")]
+position = Vector2(432, -176)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D16" parent="platform" unique_id=1615410313 instance=ExtResource("1_f3sb7")]
+position = Vector2(400, 48)
+scale = Vector2(2, 2)
+
+[node name="StaticBody2D17" parent="platform" unique_id=1977622437 instance=ExtResource("1_f3sb7")]
+position = Vector2(368, 48)
+scale = Vector2(2, 2)
+
+[node name="teleport out" type="Marker2D" parent="." unique_id=240030282]
+position = Vector2(552, 336)
+
+[node name="teleport in" type="Area2D" parent="." unique_id=9201424 node_paths=PackedStringArray("out")]
+position = Vector2(568, 720)
+input_pickable = false
+script = ExtResource("3_tlwt5")
+out = NodePath("../teleport out")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="teleport in" unique_id=1580818796]
+shape = SubResource("RectangleShape2D_fj7yv")
+
+[node name="Label" type="Label" parent="." unique_id=529264002]
+offset_left = 144.0
+offset_top = 88.0
+offset_right = 432.0
+offset_bottom = 208.0
+text = "vel:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="teleport in" to="teleport in" method="_on_body_entered"]
