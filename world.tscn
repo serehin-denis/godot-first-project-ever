@@ -7,39 +7,40 @@
 
 [node name="CharacterBody2D" parent="." unique_id=1899761522 instance=ExtResource("2_fj7yv")]
 position = Vector2(552, 416)
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 
 [node name="platform" type="Node2D" parent="." unique_id=1307931068]
-position = Vector2(519, 487)
+position = Vector2(288, 512)
+scale = Vector2(2, 2)
 
 [node name="StaticBody2D" parent="platform" unique_id=61935357 instance=ExtResource("1_f3sb7")]
-position = Vector2(-7, -7)
+position = Vector2(16.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D2" parent="platform" unique_id=347556884 instance=ExtResource("1_f3sb7")]
-position = Vector2(25, -7)
+position = Vector2(48.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D3" parent="platform" unique_id=426434503 instance=ExtResource("1_f3sb7")]
-position = Vector2(57, -7)
+position = Vector2(80.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D4" parent="platform" unique_id=888746064 instance=ExtResource("1_f3sb7")]
-position = Vector2(89, -7)
+position = Vector2(112.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D5" parent="platform" unique_id=448759101 instance=ExtResource("1_f3sb7")]
-position = Vector2(185, -7)
+position = Vector2(208.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D6" parent="platform" unique_id=1783540578 instance=ExtResource("1_f3sb7")]
-position = Vector2(121, -7)
+position = Vector2(144.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D7" parent="platform" unique_id=2005983092 instance=ExtResource("1_f3sb7")]
-position = Vector2(153, -7)
+position = Vector2(176.5, -3.5)
 scale = Vector2(2, 2)
 
 [node name="StaticBody2D8" parent="platform" unique_id=685700738 instance=ExtResource("1_f3sb7")]
-position = Vector2(217, -7)
+position = Vector2(240.5, -3.5)
 scale = Vector2(2, 2)
