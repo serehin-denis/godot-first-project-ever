@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://sl482wejw4sf" path="res://assets/player animations/idle.png" id="2_51jd6"]
 [ext_resource type="Texture2D" uid="uid://d1hve0ff4b4w0" path="res://assets/player animations/run.png" id="3_uapwn"]
 [ext_resource type="Texture2D" uid="uid://dkdbe03gooiby" path="res://assets/player animations/jump.png" id="4_kuobi"]
+[ext_resource type="Texture2D" uid="uid://j5q7d8kiqjrd" path="res://assets/player animations/wall-slide.png" id="6_kuobi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(14, 16)
@@ -127,6 +128,14 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_kuobi")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1899761522]
@@ -138,5 +147,13 @@ one_way_collision_margin = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1131289551]
 sprite_frames = SubResource("SpriteFrames_couud")
-animation = &"idle"
+animation = &"wall_slide"
 autoplay = "idle"
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1767794894]
+position = Vector2(7, 0)
+target_position = Vector2(1, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1696418965]
+position = Vector2(-7, 0)
+target_position = Vector2(-1, 0)

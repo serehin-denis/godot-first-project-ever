@@ -2,10 +2,18 @@ extends CharacterBody2D
 
 const SPEED = 350.0
 const JUMP_VELOCITY = -650.0
-const GRAVITY_MULTIPIER = 2
+const GRAVITY_MULTIPIER = 1.2
 const AIR_ACCEL = 30.0
 const DEF_ACCEL = 45
+const WALL_SLIDE_SPEED = 100
+const WALL_UP_FRICTION = 700
 @export var show_vel: Label
+@export var jump_height : float = 225.0 
+@export var jump_time_to_peak : float = .55
+
+
+@onready var jump_velocity : float = -((2.0 * jump_height) / jump_time_to_peak)
+@onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 
 # animations control
 func flip_img(direction):
@@ -19,28 +27,38 @@ func change_animation():
 		else:
 			$AnimatedSprite2D.play("idle")
 	else:
-		if velocity.y >= 0:
-			$AnimatedSprite2D.play("fall")
+		if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding() :
+			$AnimatedSprite2D.play("wall_slide")
 		else:
-			$AnimatedSprite2D.play("jump")
+			if velocity.y >= 0:
+				$AnimatedSprite2D.play("fall")
+			else:
+				$AnimatedSprite2D.play("jump")
 
 # movement
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		if velocity.y > 0: velocity += get_gravity() * delta * GRAVITY_MULTIPIER
-		else: velocity += get_gravity() * delta
-		
+		if velocity.y > 0: velocity.y += jump_gravity * delta * GRAVITY_MULTIPIER
+		else: velocity.y += jump_gravity * delta
+		if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding() : 
+			if velocity.y >= 0 : velocity.y = min(velocity.y, WALL_SLIDE_SPEED)
+			else : velocity.y = move_toward(velocity.y, 0, WALL_UP_FRICTION * delta)
 
 	# Handle jump.
-
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	var direction = Input.get_axis("ui_left", "ui_right")
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		if is_on_floor():
+			velocity.y = jump_velocity
+		elif $RayCastRight.is_colliding() or $RayCastLeft.is_colliding():
+			velocity.y = jump_velocity * .8
+			velocity.x += 400 * direction * -1
 	if Input.is_action_just_released("ui_accept") and velocity.y < 0: velocity.y /= 2
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
+
 		
 	#if direction:
 	#	if is_on_floor():
@@ -62,4 +80,4 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	flip_img(velocity.x)
 	change_animation()
-	show_vel.text = "velpcity.x: %s, velocity.y: %s" % [velocity.x, velocity.y]
+	show_vel.text = str(velocity.y)
